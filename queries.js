@@ -7,8 +7,8 @@ const pool = new Pool({
 
   // ipl_team_tbl -> team_id, team_name
   const getTeams = (request, response) => {
-    pool.query('SELECT * FROM ipl_team_tbl WHERE team_name = $1 ORDER BY team_id ASC', 
-    [teamName], (error, results) => {
+    pool.query('SELECT * FROM ipl_team_tbl ORDER BY team_id ASC', 
+    (error, results) => {
       if (error) {
         throw error
       }
@@ -49,7 +49,7 @@ const pool = new Pool({
   const addPlayerDetails = (request, response) => {
     const { player_name, team_name , player_type, player_role, player_nationality, player_rating } = request.body;
     pool.query('INSERT INTO ipl_team_player_details_tbl (player_name, team_name , player_type, player_role, player_nationality, player_rating) '+
-    ' VALUES ($[1], $[2], $[3], $[4], $[5], $[6]) ', [player_name, team_name , player_type, player_role, player_nationality, player_rating], 
+    ' VALUES ($1, $2, $3, $4, $5, $6) ', [player_name, team_name , player_type, player_role, player_nationality, player_rating], 
     (error, results) => {
       if (error) {
         throw error
@@ -62,7 +62,7 @@ const pool = new Pool({
   // player_role, player_nationality, player_rating
   const getTeamsDetails = (request, response) => {
     const teamName = request.params.teamName;
-    pool.query('SELECT * FROM ipl_team_player_details_tbl WHERE team_name = $1 ORDER BY team_id ASC', 
+    pool.query('SELECT * FROM ipl_team_player_details_tbl WHERE team_name = $1 ORDER BY team_player_id ASC', 
     [teamName], (error, results) => {
       if (error) {
         throw error

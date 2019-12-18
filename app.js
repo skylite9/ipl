@@ -33,7 +33,7 @@ app.get('/getTeamsDetails/:teamName', db.getTeamsDetails)
 app.post('/addPlayerDetails', db.addPlayerDetails)
 
 // sample api
-app.get('/getDetails', (request, response) => {
+app.get('/check', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
 });
 
