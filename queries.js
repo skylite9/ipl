@@ -81,7 +81,7 @@ const pool = new Pool({
   }
   // Method to get the dashboard Teams stats
   const getTeamsStats = (request, response) => {
-    pool.query('SELECT team_name, count(*) as player_count, avg(player_rating)' +
+    pool.query('SELECT team_name, count(*) as player_count, avg(player_rating) as player_rating' +
        ' FROM ipl_team_player_details_tbl GROUP BY team_name', 
     [teamName], (error, results) => {
       if (error) {
