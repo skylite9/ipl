@@ -26,11 +26,13 @@ app.use('/users', usersRouter);
 
 // API route details
 app.get('/getTeams', db.getTeams);
+app.get('/getTeamsStats/', db.getTeamsStats)
 app.get('/getPlayerTypeDetails', db.getPlayerTypeDetails);
 app.get('/getPlayerRoleDetails', db.getPlayerRoleDetails);
 app.get('/getPlayerNationalityDetails', db.getPlayerNationalityDetails);
 app.get('/getTeamsDetails/:teamName', db.getTeamsDetails)
 app.post('/addPlayerDetails', db.addPlayerDetails)
+app.get('/checkAdminRights/:secretCode', db.checkAdminRights)
 
 // sample api
 app.get('/check', (request, response) => {

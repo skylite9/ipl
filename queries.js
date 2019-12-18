@@ -54,7 +54,7 @@ const pool = new Pool({
       if (error) {
         throw error
       }
-      response.status(200).send(`User added with ID: ${results.team_player_id}`)
+      response.status(200).send(`User added with ID: ${results}`)
     })
   }
   // Gets ipl_team_player_details_tbl ->
@@ -70,11 +70,34 @@ const pool = new Pool({
       response.status(200).json(results.rows)
     })
   }
+  // To check wheter the user is an admin or not
+  const checkAdminRights = (request, response) => {
+      const secretCode = request.params.secretCode;
+      if (parseInt(secretCode) === 8861) {
+        response.status(200).json({'admin': true});
+      } else {
+        response.status(200).json({'admin': false});
+      }
+  }
+  // Method to get the dashboard Teams stats
+  const getTeamsStats = (request, response) => {
+    pool.query('SELECT team_name, count(*) as player_count, avg(player_rating)' +
+       ' FROM ipl_team_player_details_tbl GROUP BY team_name', 
+    [teamName], (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
+  }
+
   module.exports = {
     getTeams,
     getPlayerTypeDetails,
     getPlayerRoleDetails,
     getPlayerNationalityDetails,
     getTeamsDetails,
-    addPlayerDetails
+    addPlayerDetails,
+    checkAdminRights,
+    getTeamsStats
   }
