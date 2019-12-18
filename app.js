@@ -3,22 +3,16 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const { Pool } = require('pg');
+const db = require('./queries')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
-});
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -29,21 +23,24 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-app.get('/*', (req, res) => {
+
+// API route details
+app.get('/getTeams', db.getTeams);
+app.get('/getPlayerTypeDetails', db.getPlayerTypeDetails);
+app.get('/getPlayerRoleDetails', db.getPlayerRoleDetails);
+app.get('/getPlayerNationalityDetails', db.getPlayerNationalityDetails);
+app.get('/getTeamsDetails/:teamName', db.getTeamsDetails)
+app.post('/addPlayerDetails', db.addPlayerDetails)
+
+// sample api
+app.get('/getDetails', (request, response) => {
+  response.json({ info: 'Node.js, Express, and Postgres API' })
+});
+
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
-app.get('/db', async (req, res) => {
-  try {
-    const client = await pool.connect()
-    const result = await client.query('SELECT * FROM test_table');
-    const results = { 'results': (result) ? result.rows : null};
-    res.render('pages/db', results );
-    client.release();
-  } catch (err) {
-    console.error(err);
-    res.send("Error " + err);
-  }
-});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
