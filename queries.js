@@ -59,7 +59,7 @@ const pool = new Pool({
   }
   // Gets ipl_team_player_details_tbl ->
   // team_player_id, player_name, team_name, player_type,
-  // player_role, player_nationality, player_rating
+  // player_role, player_nationality, player_rating, player_price
   const getTeamsDetails = (request, response) => {
     const teamName = request.params.teamName;
     pool.query('SELECT * FROM ipl_team_player_details_tbl WHERE team_name = $1 ORDER BY team_player_id ASC', 
@@ -81,7 +81,7 @@ const pool = new Pool({
   }
   // Method to get the dashboard Teams stats
   const getTeamsStats = (request, response) => {
-    pool.query('SELECT team_name, count(*) as player_count, avg(player_rating) as player_rating' +
+    pool.query('SELECT team_name, count(*) as player_count, avg(player_rating) as player_rating, (60.00 - sum(player_price)) as player_price' +
        ' FROM ipl_team_player_details_tbl GROUP BY team_name', (error, results) => {
       if (error) {
         throw error
