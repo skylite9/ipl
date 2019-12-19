@@ -47,9 +47,9 @@ const pool = new Pool({
   // team_player_id, player_name, team_name, player_type,
   // player_role, player_nationality, player_rating
   const addPlayerDetails = (request, response) => {
-    const { player_name, team_name , player_type, player_role, player_nationality, player_rating } = request.body;
-    pool.query('INSERT INTO ipl_team_player_details_tbl (player_name, team_name , player_type, player_role, player_nationality, player_rating) '+
-    ' VALUES ($1, $2, $3, $4, $5, $6) ', [player_name, team_name , player_type, player_role, player_nationality, player_rating], 
+    const { player_name, team_name , player_type, player_role, player_nationality, player_rating, player_price } = request.body;
+    pool.query('INSERT INTO ipl_team_player_details_tbl (player_name, team_name , player_type, player_role, player_nationality, player_rating, player_price) '+
+    ' VALUES ($1, $2, $3, $4, $5, $6, $7) ', [player_name, team_name , player_type, player_role, player_nationality, player_rating, player_price], 
     (error, results) => {
       if (error) {
         throw error
