@@ -1,0 +1,36 @@
+truncate ipl_team_player_details_tbl;
+
+select * from ipl_team_player_details_tbl;
+
+SELECT * FROM ipl_player_nationality_tbl ;
+
+SELECT * FROM ipl_player_type_tbl ;
+
+SELECT * FROM ipl_player_role_tbl;
+
+SELECT * FROM ipl_team_tbl;
+
+Kedar Jadhav (WK) - 5.5
+
+UPDATE ipl_team_player_details_tbl
+SET team_name = 'Forge Foxes'
+WHERE
+   player_name ='Hardik Pandya';
+   
+   delete from ipl_team_player_details_tbl where
+   
+   
+   
+   
+    team_player_id |     player_name      |      team_name      | player_type | player_role | player_nationality | player_rating | player_price
+	
+	
+Groundbreakers
+Hyderabadi Nawabs
+Sunrisers Hyderabad
+Dream 11 Strikers
+Lingampally Lions
+Chasing Cheethas
+Team 11
+Honeywell Horses
+Forge Foxes
